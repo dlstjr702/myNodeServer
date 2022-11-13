@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노드제이에스 학습</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+</head>
+
+<body>
+    <%- include('nav.html') %>
+
+    <ul class="list-group">
+        <% for (var i = 0; i < posts.length; i++){ %>
+        <li class="list-group-item">
+            <h4> 할일 제목 : <%= posts[i].제목 %> </h4>
+            <p> 할일 마감날짜 : <%= posts[i].날짜 %> </p>
+            <button class="delete" data-id="<%= posts[i]._id %>">삭제</button>
+        </li>
+        <% } %>
+    </ul>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $('.delete').click(function (e) {
+            $.ajax({
+                method: 'DELETE',
+                url: '/delete',
+                data: {
+                    _id: e.target.dataset.id
+                }
+            }).done((결과) => {
+                $(this).parent('li').fadeOut();
+            })
+        });
+    </script>
+</body>
+
+</html>
